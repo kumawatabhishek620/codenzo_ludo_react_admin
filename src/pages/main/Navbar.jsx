@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { Logout } from '../LoginLogout';
 
 export default function Navbar({ sidebar, setSidebar }) {
   useEffect(() => {
@@ -69,7 +68,7 @@ export default function Navbar({ sidebar, setSidebar }) {
                     <a className="dropdown-item" href="help.html">
                       Help
                     </a>
-                    <a type='button' onClick={Logout} className="dropdown-item" >
+                    <a type='button' className="dropdown-item" >
                       <span>Log Out</span> <i className="fa fa-sign-out" />
                     </a>
                   </div>

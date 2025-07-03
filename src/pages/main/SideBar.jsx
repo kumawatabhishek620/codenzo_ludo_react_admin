@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function SideBar({sidebar}) {
   return (
@@ -37,33 +38,15 @@ export default function SideBar({sidebar}) {
       <div className="sidebar_blog_2">
         <h4>General</h4>
         <ul className="list-unstyled components">
-          <li className="active">
-            <a
-              href="#dashboard"
-              data-toggle="collapse"
-              aria-expanded="false"
-              className="dropdown-toggle"
-            >
-              <i className="fa fa-dashboard yellow_color" />{" "}
-              <span>Dashboard</span>
-            </a>
-            <ul className="collapse list-unstyled" id="dashboard">
-              <li>
-                <a href="dashboard.html">
-                  &gt; <span>Default Dashboard</span>
-                </a>
-              </li>
-              <li>
-                <a href="dashboard_2.html">
-                  &gt; <span>Dashboard style 2</span>
-                </a>
-              </li>
-            </ul>
+          <li>
+            <Link to={'/'}>
+              <i className="fa fa-dashboard yellow_color" /> <span>Dashboard</span>
+            </Link>
           </li>
           <li>
-            <a href="widgets.html">
-              <i className="fa fa-clock-o orange_color" /> <span>Widgets</span>
-            </a>
+            <Link to={'/users'}>
+              <i className="fa fa-users orange_color" /> <span>Users</span>
+            </Link>
           </li>
           <li>
             <a

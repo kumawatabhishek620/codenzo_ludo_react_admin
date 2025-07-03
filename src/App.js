@@ -1,57 +1,57 @@
-import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import React from "react";
+import './App.css'
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Outlet,
+  useLocation
+} from "react-router-dom";
+
 import Home from "./pages/Home";
+import Login from "./pages/Login";
 import SideBar from "./pages/main/SideBar";
 import Navbar from "./pages/main/Navbar";
 import Footer from "./pages/main/Footer";
-import {Login} from "./pages/LoginLogout";
+import PrivateRoute from "./pages/main/PrivateRoute";
+import Users from "./pages/users/Users";
+import NotFound from "./pages/NotFound";
+import UserProfile from "./pages/users/UserProfile";
 
 function App() {
-  const [sidebar, setSidebar] = useState("");
-  const [admin, setAdmin] = useState(null);
-
-  useEffect(() => {
-    const sidebarClass = localStorage.getItem("sidebar");
-    if (sidebarClass) {
-      setSidebar(sidebarClass);
-    } else {
-      localStorage.setItem("sidebar", "ps ps--active-y active");
-      setSidebar("ps ps--active-y active");
-    }
-  }, []);
-
-  useEffect(() => {
-    const adminData = sessionStorage.getItem("admin");
-    if (adminData) {
-      setAdmin(adminData);
-    }
-  }, []);
   return (
-    <>
-      {admin ? (
-        <div className="full_container">
-          <div className="inner_container">
-            <SideBar sidebar={sidebar} />
-            <div id="content">
-              <Navbar sidebar={sidebar} setSidebar={setSidebar} />
-              <div className="midde_cont">
-                <div className="container-fluid" style={{ minHeight: "70vh" }}>
-                  <Router>
-                    <Routes>
-                      <Route path="/login" element={<Login />} />
-                      <Route path="/" element={<Home />} />
-                    </Routes>
-                  </Router>
-                </div>
-                <Footer />
-              </div>
+    <Router>
+      <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route element={<MainLayout />}>
+        <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
+        <Route path="/users" element={<PrivateRoute><Users /></PrivateRoute>} />
+        <Route path="/user/profile" element={<PrivateRoute><UserProfile /></PrivateRoute>} />
+      </Route>
+        <Route path="*" element={<NotFound />} />
+    </Routes>
+    </Router>
+  );
+}
+
+function MainLayout() {
+  const [sidebar, setSidebar] = React.useState("");
+
+  return (
+    <div className="full_container">
+      <div className="inner_container">
+        <SideBar sidebar={sidebar} />
+        <div id="content">
+          <Navbar sidebar={sidebar} setSidebar={setSidebar} />
+          <div className="midde_cont">
+            <div className="container-fluid" style={{ minHeight: "70vh" }}>
+              <Outlet />
             </div>
+            <Footer />
           </div>
         </div>
-      ) : (
-        <Login />
-      )}
-    </>
+      </div>
+    </div>
   );
 }
 
